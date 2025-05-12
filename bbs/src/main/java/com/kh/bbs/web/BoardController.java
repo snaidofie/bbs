@@ -63,8 +63,8 @@ public class BoardController {
     detailForm.setTitle(findedBoard.getTitle());
     detailForm.setAuthor(findedBoard.getAuthor());
     detailForm.setContent(findedBoard.getContent());
+    detailForm.setCreatedDate(findedBoard.getCreatedDate());
     detailForm.setModifiedDate(findedBoard.getModifiedDate());
-    detailForm.setCreateDate(findedBoard.getCreateDate());
 
     model.addAttribute("detailForm", detailForm);
     return "board/detailForm";
@@ -85,4 +85,6 @@ public class BoardController {
     int rows = boardSVC.deleteByIds(boardIds);
     return "redirect:/boards";
   }
+
+
 }

@@ -10,6 +10,6 @@ public class DetailForm {
   private String title;
   private String content;
   private String author;
-  private Timestamp createDate;
+  private Timestamp createdDate;
   private Timestamp modifiedDate;
 }

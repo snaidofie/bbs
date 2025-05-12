@@ -23,12 +23,12 @@
     </thead>
     <tbody>
     <tr th:each="board : ${list}">
-      <td><input type="checkbox" name="boardsIds" th:value="${board.boardId}"></td>
+      <td><input type="checkbox" name="boardIds" th:value="${board.boardId}"></td>
       <td th:text="${board.boardId}"></td>
-      <td><a href="@{/boards/{id}(id=${board.boardId})}" th:text="${board.title}"></a></td>
+      <td><a th:href="@{/boards/{id}(id=${board.boardId})}" th:text="${board.title}"></a></td>
       <td th:text="${board.content}"></td>
       <td th:text="${board.author}"></td>
-      <td th:text="${#dates.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+      <td th:text="${#dates.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
       <td th:text="${#dates.format(board.modifiedDate, 'yyyy-MM-dd HH:mm')}"></td>
     </tr>
     </tbody>

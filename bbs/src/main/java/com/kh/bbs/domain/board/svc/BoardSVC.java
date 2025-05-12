@@ -20,4 +20,7 @@ public interface BoardSVC {
 
   //삭제 (여러건)
   int deleteByIds(List<Long> ids);
+
+  //수정
+  int updateById(Long boardId, Board board);
 }

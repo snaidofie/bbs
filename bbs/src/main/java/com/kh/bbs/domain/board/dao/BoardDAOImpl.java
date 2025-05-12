@@ -32,7 +32,7 @@ class BoardDAOImpl implements BoardDAO {
       board.setTitle(rs.getString("title"));
       board.setContent(rs.getString("content"));
       board.setAuthor(rs.getString("author"));
-      board.setCreateDate(rs.getTimestamp("created_date"));    // ✅ Timestamp 사용
+      board.setCreatedDate(rs.getTimestamp("created_date"));    // ✅ Timestamp 사용
       board.setModifiedDate(rs.getTimestamp("modified_date")); // ✅ Timestamp 사용
       return board;
     };
@@ -122,6 +122,30 @@ class BoardDAOImpl implements BoardDAO {
     sql.append("DELETE FROM board ");
     sql.append("      WHERE board_id in ( :ids ) ");
     Map<String, List<Long>> param = Map.of("ids", ids);
+    int rows = template.update(sql.toString(), param);
+    return rows;
+  }
+
+  /**
+   * 수정
+   * @param boardId 번호
+   * @param board 정보
+   * @return 수정건수
+   */
+  @Override
+  public int updateById(Long boardId, Board board) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("UPDATE board ");
+    sql.append("SET title = :title, content = :content, author = :author, modified_date = systimestamp ");
+    sql.append("WHERE board_id = 9 ");
+
+    SqlParameterSource param = new MapSqlParameterSource()
+        .addValue("title", board.getTitle())
+        .addValue("content", board.getContent())
+        .addValue("author", board.getAuthor())
+        .addValue("modified_date", board.getModifiedDate())
+        .addValue("board_id", boardId);
+
     int rows = template.update(sql.toString(), param);
     return rows;
   }
