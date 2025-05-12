@@ -5,6 +5,7 @@ import com.kh.bbs.domain.board.svc.BoardSVC;
 import com.kh.bbs.domain.endity.Board;
 import com.kh.bbs.web.form.DetailForm;
 import com.kh.bbs.web.form.SaveForm;
+import com.kh.bbs.web.form.UpdateForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -86,5 +87,22 @@ public class BoardController {
     return "redirect:/boards";
   }
 
+  //상품수정화면
+  @GetMapping("/{id}/edit")
+  public String updateForm(@PathVariable("id") Long boardId, Model model) {
+    //1)유효성체크
+    //상품조회
+    Optional<Board> optionalBoard = boardSVC.findById(boardId);
+    Board findedBoard = optionalBoard.orElseThrow();
+    UpdateForm updateForm = new UpdateForm();
+    updateForm.setBoardId(findedBoard.getBoardId());
+    updateForm.setTitle(findedBoard.getTitle());
+    updateForm.setAuthor(findedBoard.getAuthor());
+    updateForm.setContent(findedBoard.getContent());
+    updateForm.setCreatedDate(findedBoard.getCreatedDate());
+    updateForm.setModifiedDate(findedBoard.getModifiedDate());
+    model.addAttribute("updateForm", updateForm);
+    return "board/updateForm";
+  }
 
 }
