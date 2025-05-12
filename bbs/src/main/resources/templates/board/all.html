@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>목록</title>
+</head>
+<body>
+<h3>목록</h3>
+<form id="frm" action="/boards/delete" method="post">
+  <table>
+    <thead>
+    <tr>
+      <th>전체선택</th>
+      <th>아이디</th>
+      <th>제목</th>
+      <th>내용</th>
+      <th>작성자</th>
+      <th>작성날짜</th>
+      <th>수정날짜</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="board : ${list}">
+      <td><input type="checkbox" name="boardsIds" th:value="${board.boardId}"></td>
+      <td th:text="${board.boardId}"></td>
+      <td><a href="@{/boards/{id}(id=${board.boardId})}" th:text="${board.title}"></a></td>
+      <td th:text="${board.content}"></td>
+      <td th:text="${board.author}"></td>
+      <td th:text="${#dates.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+      <td th:text="${#dates.format(board.modifiedDate, 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+<div>
+  <button id="btnAdd">추가</button>
+  <button id="btnDel">삭제</button>
+</div>
+<script>
+  //추가
+  const $btnAdd = document.getElementById('btnAdd');
+  $btnAdd.addEventListener('click', e=>{
+    window.location.href = '/boards/add';
+  });
+
+  //삭제
+  const $btnDel = document.getElementById('btnDel');
+  $btnDel.addEventListener('click', e=>{
+    if (!confirm('삭제하시겠습니까?')) return;
+    const $frm = document.getElementById('frm');
+    $frm.submit();
+  },false);
+</script>
+</body>
+</html>
