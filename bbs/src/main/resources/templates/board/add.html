@@ -17,8 +17,14 @@
     <div><label for="">내용</label><input type="text" name="content"></div>
     <div>
       <button type="submit">등록</button>
-      <button>목록</button>
+      <button type="button" id="btnAll">목록</button>
     </div>
   </form>
+  <script>
+    const btnAll = document.getElementById('btnAll');
+    btnAll.addEventListener('click',e=>{
+      location.href = '/boards';
+    });
+  </script>
 </body>
 </html>

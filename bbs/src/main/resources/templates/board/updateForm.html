@@ -16,9 +16,18 @@
     <div><label for="">작성날짜</label><input type="text" name="createdDate" th:value="${updateForm.createdDate}" readonly></div>
     <div><label for="">수정날짜</label><input type="text" name="modifiedDate" th:value="${updateForm.modifiedDate}" readonly></div>
     <div>
-      <button type="button" id="btnUpdate">수정</button>
+      <button type="submit" id="btnUpdate">수정</button>
       <button type="button" id="btnFindAll">목록</button>
     </div>
   </form>
+  <script>
+    //수정
+
+    //목록
+    const $btnFindAll = document.getElementById('btnFindAll');
+    $btnFindAll.addEventListener('click',e=>{
+      location.href = '/boards';
+    },false);
+  </script>
 </body>
 </html>
