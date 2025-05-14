@@ -23,9 +23,9 @@ import java.util.Optional;
 @Repository
 class BoardDAOImpl implements BoardDAO {
 
-  private final NamedParameterJdbcTemplate template;
+   final NamedParameterJdbcTemplate template;
 
-  private RowMapper<Board> boardRowMapper() {
+   RowMapper<Board> boardRowMapper() {
     return (rs, rowNum) -> {
       Board board = new Board();
       board.setBoardId(rs.getLong("board_id"));
@@ -56,7 +56,7 @@ class BoardDAOImpl implements BoardDAO {
   /**
    * 등록
    * @param board
-   * @return 등록
+   * @return 번호
    */
   @Override
   public Long save(Board board) {
@@ -68,7 +68,6 @@ class BoardDAOImpl implements BoardDAO {
 
     KeyHolder keyHolder = new GeneratedKeyHolder();
     long rows = template.update(sql.toString(), param, keyHolder, new String[]{"board_id"});
-    log.info("rows={}",rows);
 
     Number pidNumber = (Number)keyHolder.getKeys().get("board_id");
     long bid = pidNumber.longValue();
@@ -86,13 +85,16 @@ class BoardDAOImpl implements BoardDAO {
     sql.append("SELECT board_id, title, content, author, created_date, modified_date ");
     sql.append("  FROM board ");
     sql.append(" WHERE board_id = :id ");
+
     SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+
     Board board = null;
     try{
       board = template.queryForObject(sql.toString(), param, BeanPropertyRowMapper.newInstance(Board.class));
     } catch (EmptyResultDataAccessException e) {
       return Optional.empty();
     }
+
     return Optional.of(board);
   }
 
@@ -137,14 +139,14 @@ class BoardDAOImpl implements BoardDAO {
     StringBuffer sql = new StringBuffer();
     sql.append("UPDATE board ");
     sql.append("SET title = :title, content = :content, author = :author, modified_date = systimestamp ");
-    sql.append("WHERE board_id = 9 ");
+    sql.append("WHERE board_id = :boardId ");
 
     SqlParameterSource param = new MapSqlParameterSource()
         .addValue("title", board.getTitle())
         .addValue("content", board.getContent())
         .addValue("author", board.getAuthor())
         .addValue("modified_date", board.getModifiedDate())
-        .addValue("board_id", boardId);
+        .addValue("boardId", boardId);
 
     int rows = template.update(sql.toString(), param);
     return rows;

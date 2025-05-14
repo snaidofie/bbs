@@ -10,6 +10,4 @@ public class UpdateForm {
   private String title;
   private String content;
   private String author;
-  private Timestamp createdDate;
-  private Timestamp modifiedDate;
 }

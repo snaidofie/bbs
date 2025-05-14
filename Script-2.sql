@@ -3,10 +3,10 @@ DROP SEQUENCE board_id_seq;
 DROP TABLE board;
 
 CREATE TABLE Board (
-board_id  NUMBER PRIMARY KEY, --아이디
-title varchar(30) NOT null,			 --제목
+board_id  NUMBER(10) PRIMARY KEY, --아이디
+title varchar2(30) NOT null,			 --제목
 content clob NOT null, 					--내용
-author varchar(20) NOT NULL,		 --작성자
+author varchar2(50) NOT NULL,		 --작성자
 created_date timestamp default systimestamp, 		--작성날짜
 modified_date timestamp default systimestamp	 	--수정날짜
 );

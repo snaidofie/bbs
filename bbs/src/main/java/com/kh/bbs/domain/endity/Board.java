@@ -10,5 +10,5 @@ public class Board {
   private String content;
   private String author;
   private Timestamp createdDate;
-  private Timestamp modifiedDate; // ✅ camelCase로 수정
+  private Timestamp modifiedDate;
 }

@@ -7,14 +7,14 @@
   <title>게시판수정</title>
 </head>
 <body>
-  <h3>상세</h3>
-  <form action="/" method="post">
+  <h3>수정</h3>
+  <form action="" th:action="@{/boards/{id}/edit(id=${updateForm.boardId})}" method="post" th:object="${updateForm}">
     <div><label for="">게시판번호</label><input type="text" name="boardId" id="boardId" th:value="${updateForm.boardId}" readonly></div>
     <div><label for="">제목</label><input type="text" name="title" th:value="${updateForm.title}"></div>
     <div><label for="">내용</label><input type="text" name="content" th:value="${updateForm.content}"></div>
     <div><label for="">작성자</label><input type="text" name="author" th:value="${updateForm.author}"></div>
-    <div><label for="">작성날짜</label><input type="text" name="createdDate" th:value="${updateForm.createdDate}" readonly></div>
-    <div><label for="">수정날짜</label><input type="text" name="modifiedDate" th:value="${updateForm.modifiedDate}" readonly></div>
+    <div><label for="">작성날짜</label><input type="text" name="createdDate" th:value="${detailForm.createdDate}" readonly></div>
+    <div><label for="">수정날짜</label><input type="text" name="modifiedDate" th:value="${detailForm.modifiedDate}" readonly></div>
     <div>
       <button type="submit" id="btnUpdate">수정</button>
       <button type="button" id="btnFindAll">목록</button>
@@ -22,6 +22,11 @@
   </form>
   <script>
     //수정
+    const $btnUpdate = document.getElementById('btnUpdate');
+    const frm = document.querySelector('form');
+    $btnUpdate.addEventListener('click', e=>{
+      frm.submit();
+    },false);
 
     //목록
     const $btnFindAll = document.getElementById('btnFindAll');

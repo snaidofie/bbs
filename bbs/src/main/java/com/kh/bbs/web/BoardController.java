@@ -6,10 +6,12 @@ import com.kh.bbs.domain.endity.Board;
 import com.kh.bbs.web.form.DetailForm;
 import com.kh.bbs.web.form.SaveForm;
 import com.kh.bbs.web.form.UpdateForm;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -99,10 +101,33 @@ public class BoardController {
     updateForm.setTitle(findedBoard.getTitle());
     updateForm.setAuthor(findedBoard.getAuthor());
     updateForm.setContent(findedBoard.getContent());
-    updateForm.setCreatedDate(findedBoard.getCreatedDate());
-    updateForm.setModifiedDate(findedBoard.getModifiedDate());
+    DetailForm detailForm = new DetailForm();
+    detailForm.setCreatedDate(findedBoard.getCreatedDate());
+    detailForm.setModifiedDate(findedBoard.getModifiedDate());
+    model.addAttribute("detailForm",detailForm);
     model.addAttribute("updateForm", updateForm);
     return "board/updateForm";
   }
+
+  //수정처리
+  @PostMapping("/{id}/edit")
+  public String updateById(
+      @PathVariable("id") Long boardId,
+      @Valid @ModelAttribute UpdateForm updateForm,
+      BindingResult bindingResult,
+      RedirectAttributes redirectAttributes
+  ){
+    Board board = new Board();
+    board.setBoardId(updateForm.getBoardId());
+    board.setTitle(updateForm.getTitle());
+    board.setAuthor(updateForm.getAuthor());
+    board.setContent(updateForm.getContent());
+
+    int rows = boardSVC.updateById(boardId, board);
+
+    redirectAttributes.addAttribute("id",boardId);
+    return "redirect:/boards";
+  }
+
 
 }

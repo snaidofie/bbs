@@ -48,6 +48,7 @@ public class BoardSVCImpl implements BoardSVC{
     return boardDAO.deleteByIds(ids);
   }
 
+  //수정
   @Override
   public int updateById(Long boardId, Board board) {return boardDAO.updateById(boardId, board);}
 }
