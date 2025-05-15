@@ -1,0 +1,97 @@
+@charset "utf-8";
+
+/* 전체 레이아웃 */
+body {
+  font-family: "Segoe UI", "Malgun Gothic", sans-serif;
+  background-color: #f7f9fc;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 700px;
+  margin: 40px auto;
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* 제목 */
+h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+/* 오류 메시지 */
+.global-err, .field-err {
+  color: #dc3545;
+  font-size: 13px;
+  margin-top: 5px;
+  display: block;
+}
+
+/* 입력 폼 그룹 */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #333;
+  background-color: #fff;
+}
+
+/* 읽기 전용 필드 스타일 */
+input[readonly] {
+  background-color: #f4f4f4;
+  color: #555;
+}
+
+/* 버튼 그룹 */
+.btn-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* 버튼 스타일 */
+.btn-save {
+  background-color: #28a745;
+  color: #fff;
+}
+.btn-save:hover {
+  background-color: #218838;
+}
+
+.btn-list {
+  background-color: #6c757d;
+  color: #fff;
+}
+.btn-list:hover {
+  background-color: #5a6268;
+}

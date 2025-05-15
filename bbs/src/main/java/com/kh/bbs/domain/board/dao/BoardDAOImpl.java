@@ -39,8 +39,8 @@ class BoardDAOImpl implements BoardDAO {
   }
 
   /**
-   * 목록
-   * @return 목록
+   * 게시글 목록
+   * @return 게시글 목록
    */
   @Override
   public List<Board> findAll() {
@@ -55,8 +55,8 @@ class BoardDAOImpl implements BoardDAO {
 
   /**
    * 등록
-   * @param board
-   * @return 번호
+   * @param board 등록할 게시글 정보
+   * @return 생성된 게시글의 ID
    */
   @Override
   public Long save(Board board) {
@@ -76,8 +76,8 @@ class BoardDAOImpl implements BoardDAO {
 
   /**
    * 조회
-   * @param id
-   * @return
+   * @param id 조회할 게시글 ID
+   * @return 조회된 게시글
    */
   @Override
   public Optional<Board> findById(Long id) {
@@ -100,8 +100,8 @@ class BoardDAOImpl implements BoardDAO {
 
   /**
    * 삭제 단건
-   * @param id 상품번호
-   * @return 삭제건수
+   * @param id 삭제할 게시글 ID
+   * @return 삭제된 건수
    */
   @Override
   public int deleteById(Long id) {
@@ -115,8 +115,8 @@ class BoardDAOImpl implements BoardDAO {
 
   /**
    * 삭제 여러건
-   * @param ids
-   * @return
+   * @param ids 삭제할 게시글 ID 리스트
+   * @return 삭제된 건수
    */
   @Override
   public int deleteByIds(List<Long> ids) {
@@ -130,9 +130,9 @@ class BoardDAOImpl implements BoardDAO {
 
   /**
    * 수정
-   * @param boardId 번호
-   * @param board 정보
-   * @return 수정건수
+   * @param boardId 수정할 게시글 ID
+   * @param board 수정된 게시글 정보
+   * @return 수정된 건수
    */
   @Override
   public int updateById(Long boardId, Board board) {

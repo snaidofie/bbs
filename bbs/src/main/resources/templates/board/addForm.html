@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글 등록</title>
+  <link rel="stylesheet" th:href="@{/css/addForm.css}">
+</head>
+<body>
+<div class="container">
+  <h3>게시글 등록</h3>
+
+  <!-- 게시글 등록 폼 -->
+  <form id="frm" action="/boards/add" method="post" th:object="${saveForm}">
+    <!-- 제목 입력 -->
+    <div class="form-group">
+      <label for="title">제목</label>
+      <input type="text" name="title" id="title" th:value="*{title}">
+      <!-- 제목 오류 메시지 -->
+      <span class="field-err" th:each="err:${#fields.errors('title')}" th:text="${err}"></span>
+      <span class="field-err" id="errTitle"></span>
+    </div>
+
+    <!-- 작성자 입력 -->
+    <div class="form-group">
+      <label for="author">작성자</label>
+      <input type="text" name="author" id="author" th:value="*{author}">
+      <!-- 작성자 오류 메시지 -->
+      <span class="field-err" th:each="err:${#fields.errors('author')}" th:text="${err}"></span>
+      <span class="field-err" id="errAuthor"></span>
+    </div>
+
+    <!-- 내용 입력 -->
+    <div class="form-group">
+      <label for="content">내용</label>
+      <input type="text" name="content" id="content" th:value="*{content}">
+      <!-- 내용 오류 메시지 -->
+      <span class="field-err" th:each="err:${#fields.errors('content')}" th:text="${err}"></span>
+      <span class="field-err" id="errContent"></span>
+    </div>
+
+    <!-- 버튼 -->
+    <div class="btn-group">
+      <button type="submit" id="btnAdd" class="btn-add">등록</button>
+      <button type="button" id="btnAll" class="btn-all">목록</button>
+    </div>
+  </form>
+</div>
+
+<script type="module">
+  // 유효성 검사에 필요한 함수와 요소들 import
+  import { getBytesSize } from '/js/common.js';
+
+  //등록
+  btnAdd.addEventListener('click',e=>{
+    e.preventDefault();
+
+    //제목
+    if(title.value.length == 0){
+      errTitle.textContent = '제목을 입력하세요';
+      title.focus();
+      return;
+    }else if(getBytesSize(title.value) > 30){
+      errTitle.textContent = '제목은 10자를 초과할수 없습니다.';
+      title.focus();
+      return;
+    }else{
+      errTitle.textContent = '';
+    }
+
+    //작성자
+    if(author.value.length == 0){
+      errAuthor.textContent = '작성자를 입력하세요';
+      author.focus();
+      return;
+    }else if(getBytesSize(author.value) > 30){
+      errAuthor.textContent = '작성자를 10자를 초과할수 없습니다.';
+      author.focus();
+      return;
+    }else{
+      errAuthor.textContent = '';
+    }
+
+    //내용
+    if(content.value.length == 0){
+      errContent.textContent = '제목을 입력하세요';
+      content.focus();
+      return;
+    }else if(getBytesSize(content.value) > 4000){
+      errContent.textContent = '제목은 1300자를 초과할수 없습니다.';
+      content.focus();
+      return;
+    }else{
+      errContent.textContent = '';
+    }
+
+    frm.submit();
+
+  }, false);
+
+  // 목록 버튼 클릭 시
+  const btnAll = document.getElementById('btnAll');
+  btnAll.addEventListener('click', e => {
+    location.href = '/boards';  // 목록 페이지로 이동
+  });
+
+</script>
+</body>
+</html>

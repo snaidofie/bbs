@@ -36,14 +36,25 @@ public class BoardController {
 
   //등록화면
   @GetMapping("/add")
-  public String addForm() {
-    return "board/add";
+  public String addForm(Model model) {
+    model.addAttribute("saveForm", new SaveForm());
+    return "board/addForm";
   }
 
   //등록처리
   @PostMapping("/add")
-  public String add(SaveForm saveForm, RedirectAttributes redirectAttributes) {
+  public String add(
+      @Valid @ModelAttribute SaveForm saveForm,
+      RedirectAttributes redirectAttributes,
+      BindingResult bindingResult,
+      Model model
+  ){
     log.info("title={},author={},content={}", saveForm.getTitle(), saveForm.getAuthor(), saveForm.getContent());
+
+    //유효성 체크
+    if (bindingResult.hasErrors()){
+      return "board/addForm";
+    }
 
     Board board = new Board();
     board.setTitle(saveForm.getTitle());
@@ -52,10 +63,10 @@ public class BoardController {
 
     Long bid = boardSVC.save(board);
     redirectAttributes.addAttribute("id", bid);
-    return "redirect:/boards";
+    return "redirect:/boards/{id}";
   }
 
-  //조회
+  //게시글 상세 조회
   @GetMapping("/{id}")
   public String findById(@PathVariable("id") Long id, Model model) {
     Optional<Board> optionalBoard = boardSVC.findById(id);
@@ -74,33 +85,34 @@ public class BoardController {
   }
 
 
-  //삭제 단건
-  @GetMapping("/{id}/delete")
+  //단건 삭제
+  @GetMapping("/{id}/del")
   public String deleteById(@PathVariable("id") Long boardId) {
 
     int rows = boardSVC.deleteById(boardId);
     return "redirect:/boards";
   }
 
-  //삭제 여러건
-  @PostMapping("/delete")
+  //여러건 삭제
+  @PostMapping("/del")
   public String deleteByIds(@RequestParam("boardIds") List<Long> boardIds) {
     int rows = boardSVC.deleteByIds(boardIds);
     return "redirect:/boards";
   }
 
-  //상품수정화면
+  //게시글 수정 화면
   @GetMapping("/{id}/edit")
   public String updateForm(@PathVariable("id") Long boardId, Model model) {
-    //1)유효성체크
-    //상품조회
+    //유효성체크
     Optional<Board> optionalBoard = boardSVC.findById(boardId);
     Board findedBoard = optionalBoard.orElseThrow();
+
     UpdateForm updateForm = new UpdateForm();
     updateForm.setBoardId(findedBoard.getBoardId());
     updateForm.setTitle(findedBoard.getTitle());
     updateForm.setAuthor(findedBoard.getAuthor());
     updateForm.setContent(findedBoard.getContent());
+
     DetailForm detailForm = new DetailForm();
     detailForm.setCreatedDate(findedBoard.getCreatedDate());
     detailForm.setModifiedDate(findedBoard.getModifiedDate());
@@ -109,7 +121,7 @@ public class BoardController {
     return "board/updateForm";
   }
 
-  //수정처리
+  //수정 처리
   @PostMapping("/{id}/edit")
   public String updateById(
       @PathVariable("id") Long boardId,
@@ -117,6 +129,10 @@ public class BoardController {
       BindingResult bindingResult,
       RedirectAttributes redirectAttributes
   ){
+    if (bindingResult.hasErrors()) {
+      return "board/updateForm";
+    }
+
     Board board = new Board();
     board.setBoardId(updateForm.getBoardId());
     board.setTitle(updateForm.getTitle());
@@ -126,7 +142,7 @@ public class BoardController {
     int rows = boardSVC.updateById(boardId, board);
 
     redirectAttributes.addAttribute("id",boardId);
-    return "redirect:/boards";
+    return "redirect:/boards/{id}";
   }
 
 
